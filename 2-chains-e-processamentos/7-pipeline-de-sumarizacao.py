@@ -2,6 +2,7 @@ from langchain_openai import ChatOpenAI
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from langchain.chat_models import init_chat_model
 from langchain_core.runnables import RunnableLambda
 from dotenv import load_dotenv
 
@@ -45,7 +46,8 @@ parts = spliter.create_documents([long_text])
 #     print(part.page_content)
 #     print("-" * 10)
 
-llm = ChatOpenAI(model="gpt-5-nano", temperature=0)
+# llm = ChatOpenAI(model="gpt-5-nano", temperature=0)
+llm = init_chat_model(model="gemini-2.5-flash", model_provider="google_genai", temperature=0.3)
 
 # LCEL map stage: summarize each chunk
 map_prompt = PromptTemplate.from_template("Write a concise summary of the following text:\n{context}")
